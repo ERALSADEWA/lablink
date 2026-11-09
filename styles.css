@@ -1,0 +1,560 @@
+/* ==========================================================================
+   LabLink Stylesheet — Desain Persis Frame Figma Tugas 1 (1120x780, Sidebar 222px)
+   Menggunakan CSS Custom Properties untuk warna & skala spacing kelipatan 8px
+   ========================================================================== */
+
+:root {
+  /* Palet Warna Sesuai Figma LabLink */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+
+  /* Warna Aksen Utama Teal (#0f766e) */
+  --color-primary: #0f766e;
+  --color-primary-hover: #115e59;
+  --color-primary-soft: #e6f4f1;
+  --color-primary-soft-border: #99f6e4;
+
+  /* Warna Status Amber / Oranye Muda */
+  --color-amber-bg: #ffedd5;
+  --color-amber-text: #c2410c;
+  --color-danger-text: #b91c1c;
+
+  /* Skala Spacing Kelipatan 8px (8, 16, 24, 32px) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+
+  /* Dimensi Layout Wireframe Figma */
+  --sidebar-width: 222px;
+  --max-width: 1120px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pastikan atribut [hidden] benar-benar menyembunyikan seksi */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #eef2f6;
+  color: var(--color-text);
+  line-height: 1.5;
+  font-size: 14.5px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Frame Layout Utama: 1120px dengan Sidebar 222px */
+.app-frame {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: 100vh;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  background-color: var(--color-bg);
+  box-shadow: 0 0 24px rgba(15, 23, 42, 0.06);
+}
+
+/* KOMPONEN 1: Sidebar Putih 222px */
+.sidebar {
+  background-color: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-3) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.btn-mobile-menu {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sidebar-menu {
+  margin-top: var(--space-3);
+  margin-bottom: auto;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-text);
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.nav-item.active .nav-dot {
+  background-color: var(--color-primary);
+}
+
+.nav-counter {
+  margin-left: auto;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  padding-top: var(--space-2);
+}
+
+.version-text {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Area Konten Kanan */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-bg);
+  min-width: 0;
+}
+
+.topbar {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-heading {
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.page-subheading {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.main-content {
+  padding: var(--space-4);
+  flex: 1;
+}
+
+/* Setiap Halaman Berdiri Sendiri Tanpa Kotak Pembungkus Luar */
+.view-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.section-intro h2 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+}
+
+/* Pill Badges (Teks + Warna) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-teal {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.badge-amber {
+  background-color: var(--color-amber-bg);
+  color: var(--color-amber-text);
+}
+
+/* Grid 2 Kolom (Sesuai Wireframe Figma) */
+.summary-cards-grid,
+.catalog-grid,
+.form-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+
+.summary-card,
+.alat-card,
+.condition-note-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.popular-block,
+.loan-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.subsection-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.horizontal-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.row-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.row-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+/* Search Bar & Katalog */
+.search-bar-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.search-field-wrap {
+  flex: 1;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.form-input:focus {
+  outline: 2px solid var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.card-bottom-row {
+  margin-top: var(--space-1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+/* Detail Alat */
+.detail-top-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: var(--space-3);
+  align-items: start;
+}
+
+.detail-preview-box {
+  background-color: #e2e8f0;
+  border-radius: var(--radius-md);
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #1e293b;
+  text-align: center;
+  padding: var(--space-2);
+}
+
+.detail-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.code-label {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.detail-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.detail-spec-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.88rem;
+  margin: var(--space-1) 0;
+}
+
+/* Form Ajukan Peminjaman */
+.loan-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.info-callout {
+  background-color: var(--color-primary-soft);
+  border: 1px solid var(--color-primary-soft-border);
+  color: var(--color-primary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.86rem;
+}
+
+.info-callout strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.form-error {
+  color: var(--color-danger-text);
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.form-success,
+.inline-feedback {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Kartu Resi Digital (#LL-019) */
+.receipt-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background-color: var(--color-surface);
+}
+
+.receipt-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.receipt-number {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.receipt-details {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.receipt-footnote {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+/* Tombol Aksi */
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-outline {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+.btn-outline:hover,
+.btn-outline[aria-pressed="true"] {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.8rem;
+}
+
+/* Responsivitas Layar Mobile (320px - 767px) */
+@media (max-width: 767px) {
+  .app-frame {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    height: auto;
+    position: relative;
+    padding: var(--space-2);
+  }
+
+  .sidebar-brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-mobile-menu {
+    display: inline-block;
+  }
+
+  .sidebar-menu {
+    display: none;
+  }
+
+  .sidebar-menu.is-open {
+    display: block;
+  }
+
+  .summary-cards-grid,
+  .catalog-grid,
+  .form-grid-2x2,
+  .detail-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar,
+  .main-content {
+    padding: var(--space-2);
+  }
+}

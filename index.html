@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LabLink — Aplikasi Katalog, Peminjaman Alat, dan Resi Digital Laboratorium ITTS">
+  <title>LabLink — Laboratorium ITTS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-frame">
+    <!-- KOMPONEN 1: Sidebar Navigasi 222px -->
+    <aside id="sidebar-nav" class="sidebar" aria-label="Navigasi Utama LabLink">
+      <div class="sidebar-brand">
+        <div>
+          <a href="#beranda" class="brand-title" data-goto="view-beranda" data-title="Beranda">LabLink</a>
+          <p class="brand-subtitle">Laboratorium ITTS</p>
+        </div>
+        <button 
+          type="button" 
+          id="btn-mobile-menu" 
+          class="btn-mobile-menu" 
+          aria-expanded="false" 
+          aria-controls="sidebar-menu"
+          aria-label="Buka atau tutup menu navigasi">
+          ☰ Menu
+        </button>
+      </div>
+
+      <nav id="sidebar-menu" class="sidebar-menu" aria-label="Menu Halaman">
+        <ul class="nav-list">
+          <li>
+            <a href="#beranda" class="nav-item active" data-target="view-beranda" data-title="Beranda">
+              <span class="nav-dot" aria-hidden="true"></span>Beranda
+            </a>
+          </li>
+          <li>
+            <a href="#katalog" class="nav-item" data-target="view-katalog" data-title="Katalog alat">
+              <span class="nav-dot" aria-hidden="true"></span>Katalog alat
+            </a>
+          </li>
+          <li>
+            <a href="#peminjaman" class="nav-item" data-target="view-peminjaman" data-title="Peminjaman saya">
+              <span class="nav-dot" aria-hidden="true"></span>Peminjaman saya
+              <span id="nav-loan-counter" class="nav-counter" aria-label="Jumlah peminjaman aktif">1</span>
+            </a>
+          </li>
+          <li>
+            <a href="#akun" class="nav-item" data-target="view-akun" data-title="Akun saya">
+              <span class="nav-dot" aria-hidden="true"></span>Akun saya
+            </a>
+          </li>
+          <li>
+            <a href="#pengelola" class="nav-item" data-target="view-pengelola" data-title="Dasbor pengelola">
+              <span class="nav-dot" aria-hidden="true"></span>Dasbor pengelola
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p class="version-text">LabLink v1.0</p>
+      </div>
+    </aside>
+
+    <!-- Area Konten Utama -->
+    <div class="workspace">
+      <!-- Header Bar Atas -->
+      <header id="topbar" class="topbar">
+        <div>
+          <h1 id="page-heading" class="page-heading">Beranda</h1>
+          <p class="page-subheading">Laboratorium ITTS</p>
+        </div>
+        <div class="topbar-right">
+          <span id="role-badge" class="badge badge-teal">Mahasiswa</span>
+        </div>
+      </header>
+
+      <main id="main-content" class="main-content">
+        <!-- =========================================================
+             HALAMAN 1: BERANDA (Tampil Pertama Kali)
+             ========================================================= -->
+        <section id="view-beranda" class="view-section" aria-labelledby="beranda-title">
+          <div class="section-intro">
+            <h2 id="beranda-title">Selamat datang di LabLink</h2>
+            <p class="text-muted">Cek ketersediaan inventaris, kondisi perangkat, dan ajukan peminjaman alat praktikum secara terstruktur.</p>
+          </div>
+
+          <div class="summary-cards-grid">
+            <article class="summary-card">
+              <h3>Katalog alat</h3>
+              <p class="text-muted">4 jenis perangkat praktikum utama terdaftar lengkap dengan informasi ID, stok, kondisi fisik, dan kelengkapan.</p>
+            </article>
+            <article class="summary-card">
+              <h3>Peminjaman saya</h3>
+              <p class="text-muted"><strong id="summary-active-count">1 peminjaman aktif</strong> sedang berjalan dan 1 riwayat pengembalian telah memiliki resi digital resmi.</p>
+            </article>
+          </div>
+
+          <div class="popular-block">
+            <h3 class="subsection-title">Alat populer untuk praktikum</h3>
+            <div class="horizontal-list">
+              <article class="row-card">
+                <div>
+                  <h4>Raspberry Pi 4</h4>
+                  <p class="text-muted">ID: LAB-RPI4-01 · Stok: 3 unit · Kondisi baik</p>
+                </div>
+                <span class="badge badge-teal">Tersedia</span>
+              </article>
+              <article class="row-card">
+                <div>
+                  <h4>MikroTik hAP ac2</h4>
+                  <p class="text-muted">ID: LAB-MTK-02 · Stok: 4 unit · Kondisi baik</p>
+                </div>
+                <span class="badge badge-teal">Tersedia</span>
+              </article>
+            </div>
+            <div class="action-row">
+              <button type="button" class="btn btn-primary" data-goto="view-katalog" data-title="Katalog alat" data-nav="view-katalog">
+                Buka katalog
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 2: KATALOG ALAT (KOMPONEN 2)
+             ========================================================= -->
+        <section id="view-katalog" class="view-section" aria-labelledby="katalog-title" hidden>
+          <div class="section-intro">
+            <h2 id="katalog-title">Cari alat laboratorium</h2>
+            <p class="text-muted">Periksa stok, kondisi, dan kelengkapan perangkat sebelum mengajukan peminjaman.</p>
+          </div>
+
+          <div class="search-bar-row">
+            <div class="search-field-wrap">
+              <label for="input-cari-alat" class="sr-only">Cari alat</label>
+              <input 
+                type="search" 
+                id="input-cari-alat" 
+                class="form-input" 
+                placeholder="Cari Raspberry Pi 4, MikroTik, Arduino, ESP32...">
+            </div>
+            <button type="button" id="btn-filter-tersedia" class="btn btn-outline" aria-pressed="false">
+              Filter tersedia
+            </button>
+          </div>
+
+          <div id="katalog-grid" class="catalog-grid">
+            <!-- Kartu 1: Raspberry Pi 4 -->
+            <article class="alat-card" data-name="Raspberry Pi 4 Model B LAB-RPI4-01" data-status="tersedia">
+              <h4>Raspberry Pi 4</h4>
+              <p class="text-muted">Stok: 3 unit · Kondisi: Baik & lengkap</p>
+              <div class="card-bottom-row">
+                <span class="badge badge-teal">Tersedia</span>
+                <button 
+                  type="button" 
+                  class="btn btn-outline btn-sm btn-lihat-detail"
+                  data-id="LAB-RPI4-01"
+                  data-short="Raspberry Pi 4"
+                  data-title="Raspberry Pi 4 Model B"
+                  data-status="Tersedia"
+                  data-stok="3 unit tersedia"
+                  data-kondisi="Baik (Teruji seluruh pin GPIO & Wi-Fi normal)"
+                  data-kelengkapan="Unit Raspberry Pi 4, Adaptor USB-C, MicroSD 32GB, Kabel Micro-HDMI"
+                  data-catatan="Seluruh port USB 3.0, Gigabit Ethernet, dan header GPIO 40-pin telah diuji sebelum diserahkan. Wajib menggunakan adaptor resmi yang disertakan.">
+                  Lihat detail
+                </button>
+              </div>
+            </article>
+
+            <!-- Kartu 2: MikroTik hAP ac2 -->
+            <article class="alat-card" data-name="MikroTik hAP ac2 LAB-MTK-02" data-status="tersedia">
+              <h4>MikroTik hAP ac2</h4>
+              <p class="text-muted">Stok: 4 unit · Kondisi: Baik & lengkap</p>
+              <div class="card-bottom-row">
+                <span class="badge badge-teal">Tersedia</span>
+                <button 
+                  type="button" 
+                  class="btn btn-outline btn-sm btn-lihat-detail"
+                  data-id="LAB-MTK-02"
+                  data-short="MikroTik hAP ac2"
+                  data-title="MikroTik hAP ac2"
+                  data-status="Tersedia"
+                  data-stok="4 unit tersedia"
+                  data-kondisi="Baik (RouterOS sudah di-reset ke konfigurasi standar)"
+                  data-kelengkapan="Unit Router MikroTik, Adaptor 24V, 2x Kabel UTP Cat6"
+                  data-catatan="Kelima port Gigabit Ethernet berfungsi normal. Harap lakukan reset konfigurasi setelah praktikum jaringan selesai.">
+                  Lihat detail
+                </button>
+              </div>
+            </article>
+
+            <!-- Kartu 3: Arduino Uno R3 -->
+            <article class="alat-card" data-name="Arduino Uno R3 LAB-ARD-03" data-status="dipinjam">
+              <h4>Arduino Uno R3</h4>
+              <p class="text-muted">Stok: 0 unit · Sedang digunakan praktikum</p>
+              <div class="card-bottom-row">
+                <span class="badge badge-amber">Dipinjam</span>
+                <button 
+                  type="button" 
+                  class="btn btn-outline btn-sm btn-lihat-detail"
+                  data-id="LAB-ARD-03"
+                  data-short="Arduino Uno R3"
+                  data-title="Arduino Uno R3"
+                  data-status="Dipinjam"
+                  data-stok="0 unit (Sedang dipinjam)"
+                  data-kondisi="Baik (Menunggu pengembalian & verifikasi fisik)"
+                  data-kelengkapan="Board Arduino Uno R3 DIP, Kabel USB Type-B, Breadboard"
+                  data-catatan="Unit sedang dipinjam dan dijadwalkan kembali sore ini. Tersedia kembali setelah diverifikasi oleh pengelola laboratorium.">
+                  Lihat detail
+                </button>
+              </div>
+            </article>
+
+            <!-- Kartu 4: ESP32 Dev Board -->
+            <article class="alat-card" data-name="ESP32 Dev Board LAB-ESP-04" data-status="tersedia">
+              <h4>ESP32 Dev Board</h4>
+              <p class="text-muted">Stok: 5 unit · Kondisi: Baik & lengkap</p>
+              <div class="card-bottom-row">
+                <span class="badge badge-teal">Tersedia</span>
+                <button 
+                  type="button" 
+                  class="btn btn-outline btn-sm btn-lihat-detail"
+                  data-id="LAB-ESP-04"
+                  data-short="ESP32 Dev Board"
+                  data-title="ESP32 Dev Board Wi-Fi & BLE"
+                  data-status="Tersedia"
+                  data-stok="5 unit tersedia"
+                  data-kondisi="Baik (Pin header lurus, konektor Micro-USB normal)"
+                  data-kelengkapan="Modul ESP32 DevKit V1, Kabel Data Micro-USB, Breadboard 400 titik"
+                  data-catatan="Cocok untuk praktikum telemetri IoT. Pastikan tegangan input sensor pada pin GPIO tidak melebihi batas logika 3.3V.">
+                  Lihat detail
+                </button>
+              </div>
+            </article>
+          </div>
+          <p id="katalog-kosong" class="empty-text" hidden>Tidak ada alat yang sesuai dengan filter atau pencarian Anda.</p>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 3: DETAIL ALAT (KOMPONEN 3)
+             ========================================================= -->
+        <section id="view-detail" class="view-section" aria-labelledby="detail-heading" hidden>
+          <div class="section-intro">
+            <h2 id="detail-heading">Raspberry Pi 4</h2>
+          </div>
+
+          <div class="detail-top-grid">
+            <div id="detail-preview-box" class="detail-preview-box" aria-hidden="true">
+              Raspberry Pi 4
+            </div>
+            <div class="detail-info-col">
+              <p id="detail-id" class="code-label">ID: LAB-RPI4-01</p>
+              <h3 id="detail-title" class="detail-title">Raspberry Pi 4 Model B</h3>
+              <div>
+                <span id="detail-badge" class="badge badge-teal">Tersedia</span>
+              </div>
+              <ul class="detail-spec-list">
+                <li><strong>Stok:</strong> <span id="detail-stok">3 unit tersedia</span></li>
+                <li><strong>Kondisi:</strong> <span id="detail-kondisi">Baik (Teruji seluruh pin GPIO & Wi-Fi normal)</span></li>
+                <li><strong>Kelengkapan:</strong> <span id="detail-kelengkapan">Unit Raspberry Pi 4, Adaptor USB-C, MicroSD 32GB, Kabel Micro-HDMI</span></li>
+              </ul>
+              <div class="action-row">
+                <button type="button" id="btn-ke-ajukan" class="btn btn-primary" data-goto="view-ajukan" data-title="Ajukan peminjaman" data-nav="view-katalog">
+                  Ajukan peminjaman
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <article class="condition-note-card">
+            <h4>Catatan kondisi</h4>
+            <p id="detail-catatan" class="text-muted">
+              Seluruh port USB 3.0, Gigabit Ethernet, dan header GPIO 40-pin telah diuji sebelum diserahkan. Wajib menggunakan adaptor resmi yang disertakan.
+            </p>
+          </article>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 4: AJUKAN PEMINJAMAN (KOMPONEN 4)
+             ========================================================= -->
+        <section id="view-ajukan" class="view-section" aria-labelledby="ajukan-title" hidden>
+          <div class="section-intro">
+            <h2 id="ajukan-title">Isi pengajuan alat</h2>
+            <p class="text-muted">Lengkapi jadwal dan keperluan praktikum untuk mengirim permintaan ke pengelola laboratorium.</p>
+          </div>
+
+          <form id="form-peminjaman" class="loan-form" novalidate>
+            <div class="form-grid-2x2">
+              <div class="form-field">
+                <label for="input-nama-alat" class="field-label">Nama alat</label>
+                <input 
+                  type="text" 
+                  id="input-nama-alat" 
+                  class="form-input" 
+                  value="Raspberry Pi 4 Model B (LAB-RPI4-01)" 
+                  required>
+              </div>
+
+              <div class="form-field">
+                <label for="input-keperluan" class="field-label">Keperluan praktikum</label>
+                <input 
+                  type="text" 
+                  id="input-keperluan" 
+                  class="form-input" 
+                  placeholder="Contoh: Praktikum IoT" 
+                  value="Praktikum IoT"
+                  required>
+              </div>
+
+              <div class="form-field">
+                <label for="input-jadwal" class="field-label">Tanggal pinjam & kembali</label>
+                <input 
+                  type="text" 
+                  id="input-jadwal" 
+                  class="form-input" 
+                  placeholder="Contoh: 10 Nov – 12 Nov 2026" 
+                  value="10 Nov – 12 Nov 2026"
+                  required>
+              </div>
+
+              <div class="form-field">
+                <label for="input-kontak" class="field-label">Kontak peminjam</label>
+                <input 
+                  type="text" 
+                  id="input-kontak" 
+                  class="form-input" 
+                  placeholder="Nama / NIM / Email" 
+                  value="bima@mahasiswa.itts.ac.id"
+                  required>
+              </div>
+            </div>
+
+            <p id="form-error-msg" class="form-error" role="alert" hidden></p>
+
+            <div class="info-callout">
+              <strong>Status awal: Menunggu persetujuan</strong>
+              <p>Permintaan akan tercatat dan menunggu persetujuan asdos sebelum alat dapat diambil.</p>
+            </div>
+
+            <div class="action-row">
+              <button type="submit" class="btn btn-primary">Kirim pengajuan</button>
+              <button type="button" class="btn btn-outline" data-goto="view-detail" data-title="Detail alat" data-nav="view-katalog">
+                Kembali ke detail
+              </button>
+            </div>
+
+            <div id="form-success-msg" class="form-success" role="status" aria-live="polite" hidden></div>
+          </form>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 5: PEMINJAMAN SAYA (KOMPONEN 5)
+             ========================================================= -->
+        <section id="view-peminjaman" class="view-section" aria-labelledby="peminjaman-title" hidden>
+          <div class="section-intro">
+            <h2 id="peminjaman-title">Status peminjaman & riwayat</h2>
+            <p class="text-muted">Pantau status persetujuan pengajuan, ajukan pengembalian, atau lihat bukti resi digital.</p>
+          </div>
+
+          <div class="loan-group">
+            <h3 class="subsection-title">Sedang berlangsung</h3>
+            <div id="active-loan-list" class="horizontal-list">
+              <article class="row-card">
+                <div>
+                  <h4>Raspberry Pi 4 Model B</h4>
+                  <p class="text-muted">ID: LAB-RPI4-01 · 10 Nov – 12 Nov 2026 · Praktikum IoT</p>
+                </div>
+                <span id="active-loan-badge" class="badge badge-teal">Menunggu</span>
+              </article>
+            </div>
+            <div class="action-row">
+              <button type="button" id="btn-ajukan-kembali" class="btn btn-primary">Ajukan pengembalian</button>
+              <button type="button" id="btn-lapor-masalah" class="btn btn-outline">Laporkan masalah</button>
+            </div>
+            <p id="peminjaman-action-feedback" class="inline-feedback" aria-live="polite" hidden></p>
+          </div>
+
+          <div class="loan-group">
+            <h3 class="subsection-title">Riwayat peminjaman</h3>
+            <div class="horizontal-list">
+              <article class="row-card">
+                <div>
+                  <h4>MikroTik hAP ac2</h4>
+                  <p class="text-muted">ID: LAB-MTK-02 · Dikembalikan 04 Nov 2026 · Diverifikasi asdos</p>
+                </div>
+                <span class="badge badge-teal">Selesai</span>
+              </article>
+            </div>
+            <div class="action-row">
+              <button type="button" id="btn-lihat-resi" class="btn btn-outline" data-goto="view-resi" data-title="Resi digital" data-nav="view-peminjaman">
+                Lihat resi digital
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 6: RESI DIGITAL (#LL-019)
+             ========================================================= -->
+        <section id="view-resi" class="view-section" aria-labelledby="resi-title" hidden>
+          <div class="section-intro">
+            <h2 id="resi-title">Bukti pengembalian</h2>
+            <p class="text-muted">Resi resmi diterbitkan setelah alat diterima dan diverifikasi oleh pengelola.</p>
+          </div>
+
+          <article id="resi-card" class="receipt-card">
+            <div class="receipt-top">
+              <span class="code-label">RESI PENGEMBALIAN RESMI</span>
+              <span class="badge badge-teal">Terverifikasi</span>
+            </div>
+            <p id="receipt-code" class="receipt-number">#LL-019</p>
+            <ul class="receipt-details">
+              <li>Alat: <strong id="resi-alat">MikroTik hAP ac2</strong></li>
+              <li>ID Alat: <strong id="resi-id">LAB-MTK-02</strong></li>
+              <li>Peminjam: <strong>Bima (Mahasiswa TI)</strong></li>
+              <li>Waktu verifikasi: <strong id="resi-waktu">4 Nov 2026, 15.20 WIB</strong></li>
+              <li>Status akhir: <strong>Lengkap dan berfungsi baik</strong></li>
+            </ul>
+            <p class="receipt-footnote">Dokumen digital ini sah sebagai bukti bebas tanggungan peminjaman laboratorium.</p>
+          </article>
+
+          <div class="action-row">
+            <button type="button" class="btn btn-outline" data-goto="view-peminjaman" data-title="Peminjaman saya" data-nav="view-peminjaman">
+              Kembali ke riwayat
+            </button>
+          </div>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 7: AKUN SAYA
+             ========================================================= -->
+        <section id="view-akun" class="view-section" aria-labelledby="akun-title" hidden>
+          <div class="section-intro">
+            <h2 id="akun-title">Profil Mahasiswa</h2>
+            <p class="text-muted">Informasi akun peminjam terdaftar pada LabLink ITTS.</p>
+          </div>
+
+          <article class="summary-card">
+            <h3>Bima — Mahasiswa Teknologi Informasi</h3>
+            <p class="text-muted">NIM: 1002240019 · Email: bima@mahasiswa.itts.ac.id · Status: Aktif & Bebas Tanggungan</p>
+          </article>
+        </section>
+
+        <!-- =========================================================
+             HALAMAN 8: DASBOR PENGELOLA
+             ========================================================= -->
+        <section id="view-pengelola" class="view-section" aria-labelledby="pengelola-title" hidden>
+          <div class="section-intro">
+            <h2 id="pengelola-title">Persetujuan & verifikasi alat</h2>
+            <p class="text-muted">Kelola permintaan peminjaman baru dan verifikasi fisik pengembalian alat.</p>
+          </div>
+
+          <div class="loan-group">
+            <h3 class="subsection-title">Permintaan baru</h3>
+            <article class="row-card">
+              <div>
+                <h4>Raspberry Pi 4 Model B</h4>
+                <p class="text-muted">Peminjam: Bima · Praktikum IoT · 10 Nov – 12 Nov 2026</p>
+              </div>
+              <span id="admin-req-badge" class="badge badge-amber">Menunggu</span>
+            </article>
+            <div class="action-row">
+              <button type="button" id="btn-admin-approve" class="btn btn-primary">Setujui peminjaman</button>
+              <button type="button" id="btn-admin-reject" class="btn btn-outline">Tolak</button>
+            </div>
+          </div>
+
+          <div class="loan-group">
+            <h3 class="subsection-title">Verifikasi pengembalian</h3>
+            <article class="row-card">
+              <div>
+                <h4>Arduino Uno R3</h4>
+                <p class="text-muted">ID: LAB-ARD-03 · Diserahkan kembali oleh mahasiswa · Menunggu cek fisik</p>
+              </div>
+              <span id="admin-verify-badge" class="badge badge-amber">Menunggu</span>
+            </article>
+            <div class="action-row">
+              <button type="button" id="btn-admin-verify" class="btn btn-primary">Verifikasi & terbitkan resi</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
